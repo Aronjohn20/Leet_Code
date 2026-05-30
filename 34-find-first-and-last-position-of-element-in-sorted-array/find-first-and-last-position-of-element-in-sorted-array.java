@@ -1,33 +1,35 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
     int res[] = new int[2];
-    int a = BinarySearch(nums,target,true);
-    int b = BinarySearch(nums,target,false);
-    res[0] = a;
-    res[1] = b;
-    return res;   
+    int res1 = BSearch(nums,target,true);
+    int res2 = BSearch(nums,target,false);
+    res[0] = res1;
+    res[1] = res2;
+    return res;
     }
-   public int BinarySearch(int arr[],int target,boolean istrue){
-    int ans = -1;
-    int low = 0;
-    int high = arr.length - 1;
-    while(low<=high){
-        int mid = low + (high-low)/2;
-        if(arr[mid]==target){
+    public int BSearch(int [] nums,int t,Boolean Istrue){
+        int start = 0;
+        int end = nums.length-1;
+        int ans = -1;
+        while(start<=end){
+        int mid = start + (end -start)/2;
+        if(nums[mid]==t){
             ans = mid;
-            if(istrue){
-                high = mid - 1;
+            if(Istrue){
+                end = mid - 1;
             }
             else{
-                low = mid + 1;
+                start = mid+1;
             }
         }
-        else if(arr[mid]<target){
-            low = mid + 1;
+        else if(nums[mid]<t){
+            start = mid+1;
         }
         else{
-            high = mid - 1;
+            end = mid - 1;
         }
+        }
+        return ans;
     }
- return ans;
-   }} 
+
+}
