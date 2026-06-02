@@ -1,16 +1,13 @@
 # Write your MySQL query statement below
-with cte1 AS
+
+with salary_rankings AS
 (
-SELECT e.id,e.name,e.salary,e.departmentId,d.name AS DepName
-FROM Employee e JOIN Department d
-ON e.departmentId = d.id   
-),
-cte2 AS
-(
-Select DepName,name,salary,
-DENSE_RANK() OVER(PARTITION BY DepName ORDER BY Salary DESC) AS Ranking    
-FROM cte1
+SELECT e.id,e.name,e.salary,e.departmentId,d.name AS DepName,
+DENSE_RANK() OVER(PARTITION BY e.departmentId ORDER BY e.salary DESC) AS Ranking    
+FROM Employee e
+LEFT JOIN Department d
+ON e.departmentId = d.id
 )
 SELECT DepName as Department, name AS Employee
-, Salary FROM cte2
+, Salary FROM salary_rankings
 WHERE Ranking<=3;
