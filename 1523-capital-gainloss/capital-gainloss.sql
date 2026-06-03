@@ -3,13 +3,8 @@ Select stock_name,
 SUM(
 CASE
 WHEN operation='Sell' THEN price
-ELSE 0
+ELSE -price
 END  
-) - SUM(
-CASE
-WHEN operation='Buy' THEN price
-ELSE 0
-END
 ) AS capital_gain_loss
 FROM
 (
