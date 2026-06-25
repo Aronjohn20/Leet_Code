@@ -1,12 +1,9 @@
-select 
-( select distinct salary from(
+SELECT
+(
+SELECT DISTINCT salary FROM(
 SELECT id,salary,
-DENSE_RANK() OVER(ORDER BY salary DESC) as ranking
-FROM employee
-) as ranked
-where ranking = 2
-) AS SecondHighestSalary;
-
--- SELECT MAX(salary) AS SecondHighestSalary
--- FROM employee WHERE salary < 
--- (SELECT MAX(salary) FROM Employee);
+DENSE_RANK() OVER(ORDER BY salary DESC) AS ranking
+FROM Employee
+) t
+WHERE ranking = 2
+) AS SecondHighestSalary
