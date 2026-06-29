@@ -1,11 +1,14 @@
-# Write your MySQL query statement below
-with dep_rank AS
+# Write your MySQL que
+with cte as 
 (
-SELECT d.name as Department,e.name as Employee,e.salary as Salary,
-RANK() OVER(PARTITION BY d.name ORDER BY e.salary DESC) as max_sal 
-FROM Employee e JOIN Department d 
-ON e.departmentId = d.id
+SELECT d.name AS Department,e.name AS Employee,e.salary AS 
+Salary,
+DENSE_RANK() OVER(PARTITION BY e.departmentId ORDER BY e.salary DESC)
+AS ranking
+FROM Employee e
+JOIN Department d
+ON e.departmentId = d.id    
 )
 SELECT Department,Employee,Salary
-FROM dep_rank 
-WHERE max_sal=1;
+FROM cte
+WHERE ranking=1
